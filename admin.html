@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel | Dobgima Joshua Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body class="login-page" id="adminBody">
+
+  <!-- ===== LOGIN SCREEN ===== -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <div class="login-logo">
+        <span class="logo-bracket">&lt;</span>DJ<span class="logo-bracket">/&gt;</span>
+      </div>
+      <h1 class="login-title">Admin Login</h1>
+      <p class="login-sub">Portfolio management panel</p>
+      <form id="loginForm" class="login-form" autocomplete="off">
+        <div class="a-form-group">
+          <label for="adminEmail"><i class="fas fa-envelope"></i> Email</label>
+          <input type="email" id="adminEmail" placeholder="Enter your email" autocomplete="off" required />
+        </div>
+        <div class="a-form-group">
+          <label for="adminPass"><i class="fas fa-lock"></i> Password</label>
+          <input type="password" id="adminPass" placeholder="Enter password" autocomplete="off" required />
+          <button type="button" class="pass-toggle" id="passToggle" title="Show/hide password">
+            <i class="fas fa-eye" id="passEyeIcon"></i>
+          </button>
+        </div>
+        <div class="login-error" id="loginError"></div>
+        <button type="submit" class="a-btn a-btn-primary login-btn" id="loginBtn">
+          <i class="fas fa-sign-in-alt"></i> Login
+        </button>
+      </form>
+      <p class="login-hint">Use your Supabase Auth email &amp; password.</p>
+    </div>
+  </div>
+
+  <!-- ===== ADMIN DASHBOARD ===== -->
+  <div class="admin-app" id="adminApp" style="display:none;">
+
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="sidebar-logo">
+        <span class="logo-bracket">&lt;</span>DJ<span class="logo-bracket">/&gt;</span>
+        <span class="sidebar-logo-text">Admin</span>
+      </div>
+      <nav class="sidebar-nav">
+        <button class="sidebar-link active" data-page="projects" onclick="showPage('projects', this)">
+          <i class="fas fa-folder-open"></i> Projects
+        </button>
+        <button class="sidebar-link" data-page="settings" onclick="showPage('settings', this)">
+          <i class="fas fa-cog"></i> Settings
+        </button>
+        <a href="index.html" target="_blank" class="sidebar-link">
+          <i class="fas fa-external-link-alt"></i> View Site
+        </a>
+      </nav>
+      <button class="sidebar-logout" id="logoutBtn" onclick="adminLogout()">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+
+      <!-- Top Bar -->
+      <header class="admin-topbar">
+        <button class="topbar-menu" id="sidebarToggle" onclick="toggleSidebar()">
+          <i class="fas fa-bars"></i>
+        </button>
+        <h2 class="topbar-title" id="topbarTitle">Projects</h2>
+        <div class="topbar-right">
+          <span class="topbar-user"><i class="fas fa-user-circle"></i> Admin</span>
+        </div>
+      </header>
+
+      <!-- ===== PROJECTS PAGE ===== -->
+      <section class="admin-page active" id="page-projects">
+
+        <div class="admin-page-header">
+          <div>
+            <h2>My Projects</h2>
+            <p>Add, edit, and delete projects shown on your portfolio.</p>
+          </div>
+          <button class="a-btn a-btn-primary" onclick="openProjectModal()">
+            <i class="fas fa-plus"></i> Add Project
+          </button>
+        </div>
+
+        <!-- Stats -->
+        <div class="admin-stats">
+          <div class="admin-stat-card">
+            <i class="fas fa-folder"></i>
+            <div>
+              <span class="astat-num" id="totalProjects">0</span>
+              <span class="astat-label">Total Projects</span>
+            </div>
+          </div>
+          <div class="admin-stat-card">
+            <i class="fas fa-eye"></i>
+            <div>
+              <span class="astat-num" id="withDemo">0</span>
+              <span class="astat-label">With Live Demo</span>
+            </div>
+          </div>
+          <div class="admin-stat-card">
+            <i class="fab fa-github"></i>
+            <div>
+              <span class="astat-num" id="withCode">0</span>
+              <span class="astat-label">With GitHub Link</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projects List -->
+        <div class="admin-projects-list" id="adminProjectsList">
+          <div class="admin-empty" id="adminEmpty">
+            <i class="fas fa-folder-open"></i>
+            <p>No projects yet. Click <strong>"Add Project"</strong> to get started!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SETTINGS PAGE ===== -->
+      <section class="admin-page" id="page-settings">
+        <div class="admin-page-header">
+          <div>
+            <h2>Settings</h2>
+            <p>Update your admin credentials and profile picture.</p>
+          </div>
+        </div>
+        
+        <div class="settings-card" style="margin-bottom: 24px;">
+          <h3><i class="fas fa-user-circle"></i> Profile Picture</h3>
+          <form id="profilePicForm" class="settings-form">
+            <div class="a-form-group">
+              <label>Upload New Picture (Updates Hero & About Sections)</label>
+              <div class="image-upload-area" id="profileUploadArea">
+                <input type="file" id="pProfileFile" accept="image/*" hidden />
+                <div class="upload-placeholder" id="profilePlaceholder">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <p>Click to upload image</p>
+                  <small>PNG, JPG, WEBP — max 2MB</small>
+                </div>
+                <img id="profilePreview" src="" alt="Preview" style="display:none;max-height:160px;border-radius:50%;object-fit:cover;width:160px;margin:10px auto;" />
+                <button type="button" class="remove-img-btn" id="removeProfileBtn" style="display:none;margin:20px auto 0;" onclick="removeProfileImage()">
+                  <i class="fas fa-trash"></i> Remove Image
+                </button>
+              </div>
+            </div>
+            <button type="submit" class="a-btn a-btn-primary">
+              <i class="fas fa-save"></i> Save Picture
+            </button>
+          </form>
+        </div>
+
+        <div class="settings-card" style="margin-bottom: 24px;">
+          <h3><i class="fas fa-file-pdf"></i> Resume / CV</h3>
+          <form id="cvForm" class="settings-form">
+            <div class="a-form-group">
+              <label>Upload New CV (Updates "Download CV" button)</label>
+              <div class="image-upload-area" id="cvUploadArea">
+                <input type="file" id="pCvFile" accept=".pdf,.doc,.docx" hidden />
+                <div class="upload-placeholder" id="cvPlaceholder">
+                  <i class="fas fa-file-upload"></i>
+                  <p>Click to upload CV</p>
+                  <small>PDF, DOC, DOCX — max 5MB</small>
+                </div>
+                <div id="cvPreview" style="display:none; text-align:center; padding: 20px; color: var(--accent);">
+                  <i class="fas fa-file-pdf" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                  <p id="cvFileName" style="font-weight: 500; word-break: break-all;">CV Uploaded</p>
+                </div>
+                <button type="button" class="remove-img-btn" id="removeCvBtn" style="display:none;margin:10px auto 0;" onclick="removeCvFile()">
+                  <i class="fas fa-trash"></i> Remove CV
+                </button>
+              </div>
+            </div>
+            <button type="submit" class="a-btn a-btn-primary">
+              <i class="fas fa-save"></i> Save CV
+            </button>
+          </form>
+        </div>
+
+        <div class="settings-card">
+          <h3><i class="fas fa-lock"></i> Change Password</h3>
+          <form id="changePassForm" class="settings-form">
+            <div class="a-form-group">
+              <label>New Password</label>
+              <input type="password" id="newPass" placeholder="New password (min 8 chars)" />
+            </div>
+            <div class="a-form-group">
+              <label>Confirm New Password</label>
+              <input type="password" id="confirmPass" placeholder="Repeat new password" />
+            </div>
+            <div class="pass-msg" id="passMsg"></div>
+            <button type="submit" class="a-btn a-btn-primary">
+              <i class="fas fa-save"></i> Update Password
+            </button>
+          </form>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ===== PROJECT MODAL ===== -->
+  <div class="a-modal-overlay" id="projectModalOverlay">
+    <div class="a-modal">
+      <div class="a-modal-header">
+        <h3 id="modalTitle">Add New Project</h3>
+        <button class="a-modal-close" onclick="closeProjectModal()"><i class="fas fa-times"></i></button>
+      </div>
+      <form id="projectForm" class="a-modal-body" novalidate>
+        <input type="hidden" id="editIndex" value="" />
+
+        <div class="a-form-row">
+          <div class="a-form-group">
+            <label>Project Title <span class="req">*</span></label>
+            <input type="text" id="pTitle" placeholder="e.g. Logistics Tracking App" required />
+          </div>
+          <div class="a-form-group">
+            <label>Tech Tags <span class="req">*</span></label>
+            <input type="text" id="pTags" placeholder="Flutter, Firebase, Dart" />
+            <small>Separate with commas</small>
+          </div>
+        </div>
+
+        <div class="a-form-group">
+          <label>Description <span class="req">*</span></label>
+          <textarea id="pDesc" rows="3" placeholder="Describe your project briefly..." required></textarea>
+        </div>
+
+        <div class="a-form-row">
+          <div class="a-form-group">
+            <label>Live Demo URL</label>
+            <input type="url" id="pLiveUrl" placeholder="https://your-demo.com" />
+          </div>
+          <div class="a-form-group">
+            <label>GitHub / Code URL</label>
+            <input type="url" id="pCodeUrl" placeholder="https://github.com/..." />
+          </div>
+        </div>
+
+        <div class="a-form-group">
+          <label>Project Image</label>
+          <div class="image-upload-area" id="imageUploadArea">
+            <input type="file" id="pImageFile" accept="image/*" hidden />
+            <div class="upload-placeholder" id="uploadPlaceholder">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <p>Click to upload image</p>
+              <small>PNG, JPG, WEBP — max 2MB</small>
+            </div>
+            <img id="imagePreview" src="" alt="Preview" style="display:none;max-height:160px;border-radius:8px;object-fit:cover;width:100%;" />
+            <button type="button" class="remove-img-btn" id="removeImgBtn" style="display:none;" onclick="removeImage()">
+              <i class="fas fa-trash"></i> Remove Image
+            </button>
+          </div>
+        </div>
+
+        <div class="a-form-group">
+          <label>Icon (if no image)</label>
+          <select id="pIcon">
+            <option value="fas fa-code">💻 Code</option>
+            <option value="fas fa-mobile-alt">📱 Mobile App</option>
+            <option value="fas fa-globe">🌐 Web App</option>
+            <option value="fas fa-shopping-cart">🛒 E-Commerce</option>
+            <option value="fas fa-comments">💬 Chat App</option>
+            <option value="fas fa-shipping-fast">🚚 Logistics</option>
+            <option value="fas fa-heartbeat">❤️ Health</option>
+            <option value="fas fa-graduation-cap">🎓 Education</option>
+            <option value="fas fa-utensils">🍕 Food</option>
+            <option value="fas fa-gamepad">🎮 Game</option>
+          </select>
+        </div>
+
+        <div class="a-modal-footer">
+          <button type="button" class="a-btn a-btn-ghost" onclick="closeProjectModal()">Cancel</button>
+          <button type="submit" class="a-btn a-btn-primary" id="saveProjectBtn">
+            <i class="fas fa-save"></i> Save Project
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== DELETE CONFIRM ===== -->
+  <div class="a-modal-overlay" id="deleteConfirmOverlay">
+    <div class="a-modal delete-modal">
+      <div class="delete-icon"><i class="fas fa-trash-alt"></i></div>
+      <h3>Delete Project?</h3>
+      <p>Are you sure you want to delete <strong id="deleteProjectName"></strong>? This cannot be undone.</p>
+      <div class="a-modal-footer">
+        <button class="a-btn a-btn-ghost" onclick="closeDelete()">Cancel</button>
+        <button class="a-btn a-btn-danger" id="confirmDeleteBtn" onclick="confirmDelete()">
+          <i class="fas fa-trash"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TOAST ===== -->
+  <div class="admin-toast" id="adminToast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="supabase-config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

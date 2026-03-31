@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Dobgima Joshua Foncham â€“ Software Engineer specializing in App Development and Web Development. View my portfolio, skills, and projects." />
+  <title>Dobgima Joshua Foncham | Software Engineer</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- ===== CURSOR GLOW ===== -->
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- ===== PARTICLES ===== -->
+  <canvas id="particleCanvas"></canvas>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-logo">
+        <span class="logo-bracket">&lt;</span>DJ<span class="logo-bracket">/&gt;</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" class="nav-link active-link">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <button class="btn btn-primary nav-cta" id="hireMeBtn" onclick="openHireModal()">Hire Me</button>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="home">
+    <div class="hero-bg-image"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content container">
+      <div class="hero-badge reveal-up" style="--delay:0s">
+        <span class="badge-dot"></span> Available for work
+      </div>
+      <div class="hero-avatar-wrap reveal-up" style="--delay:0.05s">
+         <img src="profile.jpg" alt="Dobgima Joshua" id="heroAvatarImg" class="hero-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+         <div class="hero-avatar-placeholder" id="heroAvatarPlaceholder" style="display: none;">DJ</div>
+      </div>
+      <h1 class="hero-title reveal-up" style="--delay:0.1s">
+        Hi, I'm <span class="gradient-text">Dobgima Joshua</span>
+      </h1>
+      <p class="hero-subtitle reveal-up" style="--delay:0.2s">
+        <span class="typed-prefix">I build </span><span class="typed-text" id="typedText"></span><span class="typed-cursor">|</span>
+      </p>
+      <p class="hero-desc reveal-up" style="--delay:0.3s">
+        Software Engineer crafting exceptional digital experiences â€” from sleek mobile apps to powerful web platforms.
+      </p>
+      <div class="hero-actions reveal-up" style="--delay:0.4s">
+        <a href="#projects" class="btn btn-primary btn-lg">
+          <i class="fas fa-rocket"></i> View My Work
+        </a>
+        <a href="#contact" class="btn btn-outline btn-lg">
+          <i class="fas fa-paper-plane"></i> Get In Touch
+        </a>
+      </div>
+      <div class="hero-stats reveal-up" style="--delay:0.5s">
+        <div class="stat-item">
+          <span class="stat-number" data-target="3">0</span><span class="stat-plus">+</span>
+          <span class="stat-label">Years Experience</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-number" data-target="0">0</span><span class="stat-plus"></span>
+          <span class="stat-label">Projects Completed</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-number" data-target="0">0</span><span class="stat-plus"></span>
+          <span class="stat-label">Happy Clients</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">
+      <span>Scroll Down</span>
+      <div class="scroll-arrow">
+        <i class="fas fa-chevron-down"></i>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section class="about section" id="about">
+    <div class="container">
+      <div class="section-header reveal-up">
+        <span class="section-tag">About Me</span>
+        <h2 class="section-title">The Person Behind the Code</h2>
+        <p class="section-subtitle">Passionate about turning complex ideas into elegant, functional software.</p>
+      </div>
+      <div class="about-grid">
+        <div class="about-visual reveal-left">
+          <div class="about-card-wrap">
+            <div class="about-avatar">
+              <img src="profile.jpg" alt="Dobgima Joshua" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              <div class="avatar-initials" style="display: none;">DJ</div>
+              <div class="avatar-ring ring1"></div>
+              <div class="avatar-ring ring2"></div>
+              <div class="avatar-ring ring3"></div>
+            </div>
+            <div class="about-floating-badge badge-app">
+              <i class="fas fa-mobile-alt"></i> App Dev
+            </div>
+            <div class="about-floating-badge badge-web">
+              <i class="fas fa-globe"></i> Web Dev
+            </div>
+            <div class="about-code-snippet">
+              <pre><code><span class="code-kw">const</span> <span class="code-var">dobgima</span> <span class="code-op">=</span> {
+  <span class="code-key">role</span>: <span class="code-str">"Software Engineer"</span>,
+  <span class="code-key">passion</span>: <span class="code-str">"Building apps"</span>,
+  <span class="code-key">coffee</span>: <span class="code-bool">true</span> â˜•
+};</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="about-content reveal-right">
+          <h3 class="about-name">Dobgima Joshua Foncham</h3>
+          <span class="about-role-tag">Software Engineer</span>
+          <p class="about-text">
+            I'm a passionate software engineer with expertise in both mobile app development and web development. I love crafting seamless user experiences and solving real-world problems with clean, efficient code.
+          </p>
+          <p class="about-text">
+            Whether it's building cross-platform mobile apps or designing robust web applications, I bring creativity and technical precision to every project. My goal is to deliver software that is not only functional but also beautifully designed.
+          </p>
+          <div class="about-details">
+            <div class="detail-item">
+              <i class="fas fa-user-tie"></i>
+              <div>
+                <span class="detail-label">Name</span>
+                <span class="detail-value">Dobgima Joshua Foncham</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-envelope"></i>
+              <div>
+                <span class="detail-label">Email</span>
+                <span class="detail-value">dobgimajoshua52@gmail.com</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-phone"></i>
+              <div>
+                <span class="detail-label">Phone</span>
+                <span class="detail-value">+237 670 874 649 / 651 328 453</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <div>
+                <span class="detail-label">Location</span>
+                <span class="detail-value">Cameroon</span>
+              </div>
+            </div>
+          </div>
+          <div class="about-actions">
+            <a href="mailto:dobgimajoshua52@gmail.com" class="btn btn-primary" id="downloadCvBtn">
+              <i class="fas fa-download"></i> Download CV
+            </a>
+            <div class="social-links">
+              <a href="mailto:dobgimajoshua52@gmail.com" class="social-link" title="Email" aria-label="Email">
+                <i class="fas fa-envelope"></i>
+              </a>
+              <a href="https://github.com/" target="_blank" class="social-link" title="GitHub" aria-label="GitHub">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/dobgima-joshua-2291a7301/" target="_blank" class="social-link" title="LinkedIn" aria-label="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a href="https://wa.me/237670874649" target="_blank" class="social-link" title="WhatsApp" aria-label="WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SKILLS ===== -->
+  <section class="skills section" id="skills">
+    <div class="container">
+      <div class="section-header reveal-up">
+        <span class="section-tag">My Skills</span>
+        <h2 class="section-title">Technologies I Work With</h2>
+        <p class="section-subtitle">A curated toolkit built through hands-on experience and continuous learning.</p>
+      </div>
+
+      <div class="skills-tabs reveal-up">
+        <button class="tab-btn active" data-tab="web">Web Development</button>
+        <button class="tab-btn" data-tab="app">App Development</button>
+        <button class="tab-btn" data-tab="tools">Tools & Others</button>
+      </div>
+
+      <div class="skills-panel active" id="tab-web">
+        <div class="skills-grid">
+          <div class="skill-card reveal-up" style="--delay:0s">
+            <div class="skill-icon"><i class="fab fa-html5"></i></div>
+            <span class="skill-name">HTML5</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" data-pct="95"></div></div>
+            <span class="skill-pct">95%</span>
+          </div>
+          <div class="skill-card reveal-up" style="--delay:0.1s">
+            <div class="skill-icon"><i class="fab fa-css3-alt"></i></div>
+            <span class="skill-name">CSS3</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" data-pct="90"></div></div>
+            <span class="skill-pct">90%</span>
+          </div>
+          <div class="skill-card reveal-up" style="--delay:0.2s">
+            <div class="skill-icon"><i class="fab fa-js"></i></div>
+            <span class="skill-name">JavaScript</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" data-pct="88"></div></div>
+            <span class="skill-pct">88%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="skills-panel" id="tab-app">
+        <div class="skills-grid">
+          <div class="skill-card reveal-up" style="--delay:0s">
+            <div class="skill-icon"><i class="fas fa-mobile-alt" style="color:#54C5F8"></i></div>
+            <span class="skill-name">Flutter</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" data-pct="88"></div></div>
+            <span class="skill-pct">88%</span>
+          </div>
+          <div class="skill-card reveal-up" style="--delay:0.1s">
+            <div class="skill-icon dart-icon">Dart</div>
+            <span class="skill-name">Dart</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" data-pct="85"></div></div>
+            <span class="skill-pct">85%</span>
+          </div>
+          <div class="skill-card reveal-up" style="--delay:0.2s">
+            <div class="skill-icon"><i class="fas fa-fire"></i></div>
+            <span class="skill-name">Firebase</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" data-pct="82"></div></div>
+            <span class="skill-pct">82%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="skills-panel" id="tab-tools">
+        <div class="skills-grid">
+          <div class="skill-card reveal-up" style="--delay:0s">
+            <div class="skill-icon"><i class="fab fa-git-alt"></i></div>
+            <span class="skill-name">Git</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" data-pct="90"></div></div>
+            <span class="skill-pct">90%</span>
+          </div>
+          <div class="skill-card reveal-up" style="--delay:0.1s">
+            <div class="skill-icon"><i class="fab fa-github"></i></div>
+            <span class="skill-name">GitHub</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" data-pct="90"></div></div>
+            <span class="skill-pct">90%</span>
+          </div>
+          <div class="skill-card reveal-up" style="--delay:0.2s">
+            <div class="skill-icon"><i class="fas fa-server"></i></div>
+            <span class="skill-name">Hostinger</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" data-pct="85"></div></div>
+            <span class="skill-pct">85%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROJECTS ===== -->
+  <section class="projects section" id="projects">
+    <div class="container">
+      <div class="section-header reveal-up">
+        <span class="section-tag">Portfolio</span>
+        <h2 class="section-title">Featured Projects</h2>
+        <p class="section-subtitle">A selection of work that showcases my skills and passion.</p>
+      </div>
+      <!-- Projects are loaded dynamically from localStorage by main.js -->
+      <div class="projects-grid" id="projectsGrid"></div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section class="contact section" id="contact">
+    <div class="container">
+      <div class="section-header reveal-up">
+        <span class="section-tag">Contact</span>
+        <h2 class="section-title">Let's Work Together</h2>
+        <p class="section-subtitle">Have a project in mind? I'd love to hear about it.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info reveal-left">
+          <h3 class="contact-info-title">Get In Touch</h3>
+          <p class="contact-info-desc">Whether you have a project idea, need a freelancer, or just want to say hello â€” my inbox is always open!</p>
+          <div class="contact-cards">
+            <div class="contact-card">
+              <div class="contact-card-icon"><i class="fas fa-envelope"></i></div>
+              <div>
+                <span class="contact-card-label">Email</span>
+                <a href="mailto:dobgimajoshua52@gmail.com" class="contact-card-value">dobgimajoshua52@gmail.com</a>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-card-icon"><i class="fas fa-phone"></i></div>
+              <div>
+                <span class="contact-card-label">Phone / WhatsApp</span>
+                <a href="tel:+237670874649" class="contact-card-value">+237 670 874 649</a>
+                <a href="tel:+237651328453" class="contact-card-value">+237 651 328 453</a>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-card-icon"><i class="fas fa-map-marker-alt"></i></div>
+              <div>
+                <span class="contact-card-label">Location</span>
+                <span class="contact-card-value">Cameroon ðŸ‡¨ðŸ‡²</span>
+              </div>
+            </div>
+          </div>
+          <div class="contact-socials">
+            <a href="mailto:dobgimajoshua52@gmail.com" class="csocial-link" title="Email"><i class="fas fa-envelope"></i></a>
+            <a href="https://github.com/" target="_blank" class="csocial-link" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/dobgima-joshua-2291a7301/" target="_blank" class="csocial-link" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://wa.me/237670874649" target="_blank" class="csocial-link" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+
+        <div class="contact-form-wrap reveal-right">
+          <!-- FormSubmit.co sends all messages directly to your Gmail -->
+          <form class="contact-form" id="contactForm"
+            action="https://formsubmit.co/dobgimajoshua52@gmail.com"
+            method="POST">
+            <!-- FormSubmit settings -->
+            <input type="hidden" name="_subject" value="New Portfolio Contact" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_next" value="" id="formNextUrl" />
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" placeholder="John Doe" required autocomplete="name" />
+              </div>
+              <div class="form-group">
+                <label for="email">Your Email</label>
+                <input type="email" id="email" name="email" placeholder="john@email.com" required autocomplete="email" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="subject" placeholder="Project Inquiry" required />
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+            <div class="form-success" id="formSuccess">
+              <i class="fas fa-check-circle"></i> Message sent! I'll reply soon.
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <a href="#home" class="footer-logo">
+          <span class="logo-bracket">&lt;</span>DJ<span class="logo-bracket">/&gt;</span>
+        </a>
+        <p class="footer-text">
+          Designed &amp; Built by <strong>Dobgima Joshua Foncham</strong> &copy; <span id="year"></span>
+        </p>
+        <div class="footer-links">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+    <a href="#home" class="back-to-top" id="backToTop" title="Back to top">
+      <i class="fas fa-arrow-up"></i>
+    </a>
+  </footer>
+
+  <!-- ===== HIRE ME MODAL ===== -->
+  <div class="hire-modal-overlay" id="hireMeOverlay" onclick="closeHireModal()">
+    <div class="hire-modal" onclick="event.stopPropagation()">
+      <button class="hire-modal-close" onclick="closeHireModal()"><i class="fas fa-times"></i></button>
+      <div class="hire-modal-icon"><i class="fas fa-handshake"></i></div>
+      <h2 class="hire-modal-title">Let's Work Together!</h2>
+      <p class="hire-modal-desc">Ready to bring your project to life? Reach out directly and I'll get back to you within 24 hours.</p>
+      <div class="hire-modal-actions">
+        <a href="mailto:dobgimajoshua52@gmail.com?subject=Hiring%20Inquiry&body=Hi%20Dobgima%2C%20I%20would%20like%20to%20hire%20you%20for..." class="hire-option email-option">
+          <div class="hire-option-icon"><i class="fas fa-envelope"></i></div>
+          <div>
+            <span class="hire-option-title">Send Email</span>
+            <span class="hire-option-sub">dobgimajoshua52@gmail.com</span>
+          </div>
+          <i class="fas fa-arrow-right hire-arrow"></i>
+        </a>
+        <a href="https://wa.me/237670874649?text=Hi%20Dobgima%2C%20I%20would%20like%20to%20hire%20you%20for%20a%20project." target="_blank" class="hire-option whatsapp-option">
+          <div class="hire-option-icon"><i class="fab fa-whatsapp"></i></div>
+          <div>
+            <span class="hire-option-title">WhatsApp</span>
+            <span class="hire-option-sub">+237 670 874 649</span>
+          </div>
+          <i class="fas fa-arrow-right hire-arrow"></i>
+        </a>
+        <button class="hire-option contact-option" onclick="closeHireModal(); document.querySelector('#contact').scrollIntoView({behavior:'smooth'});">
+          <div class="hire-option-icon"><i class="fas fa-paper-plane"></i></div>
+          <div>
+            <span class="hire-option-title">Fill Contact Form</span>
+            <span class="hire-option-sub">I'll respond within 24 hours</span>
+          </div>
+          <i class="fas fa-arrow-right hire-arrow"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="supabase-config.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
