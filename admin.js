@@ -11,35 +11,46 @@ const loginError  = document.getElementById('loginError');
 const loginScreen = document.getElementById('loginScreen');
 const adminApp    = document.getElementById('adminApp');
 
+// Local admin credentials (Supabase Auth is unavailable — project offline)
+const ADMIN_EMAIL = 'dobgimajoshua52@gmail.com';
+const ADMIN_PASS  = 'DJ@Portfolio2026';
+
 // Check if there is an active session on page load
 async function initAuth() {
-  const { data: { session } } = await sb.auth.getSession();
-  if (session) {
+  if (sessionStorage.getItem('dj_admin_session') === '1') {
     showDashboard();
+    return;
   }
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    if (session) showDashboard();
+  } catch (e) { /* Supabase unreachable — local login only */ }
 }
 initAuth();
 
 loginForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const email = document.getElementById('adminEmail').value.trim();
+  const email = document.getElementById('adminEmail').value.trim().toLowerCase();
   const pass  = document.getElementById('adminPass').value;
 
   const loginBtn = document.getElementById('loginBtn');
   loginBtn.disabled = true;
   loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
 
-  const { error } = await sb.auth.signInWithPassword({ email, password: pass });
-
-  if (error) {
-    loginError.textContent = 'Incorrect email or password.';
-    document.getElementById('adminPass').value = '';
-    loginBtn.disabled = false;
-    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
-    setTimeout(() => { loginError.textContent = ''; }, 4000);
-  } else {
+  if (email === ADMIN_EMAIL.toLowerCase() && pass === ADMIN_PASS) {
+    sessionStorage.setItem('dj_admin_session', '1');
+    // Also try to establish a Supabase session in the background so
+    // database/storage writes work if the project comes back online.
+    try { await sb.auth.signInWithPassword({ email, password: pass }); } catch (err) { /* ignore */ }
     showDashboard();
+    return;
   }
+
+  loginError.textContent = 'Incorrect email or password.';
+  document.getElementById('adminPass').value = '';
+  loginBtn.disabled = false;
+  loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+  setTimeout(() => { loginError.textContent = ''; }, 4000);
 });
 
 // Password toggle
@@ -61,7 +72,8 @@ function showDashboard() {
 }
 
 async function adminLogout() {
-  await sb.auth.signOut();
+  sessionStorage.removeItem('dj_admin_session');
+  try { await sb.auth.signOut(); } catch (e) { /* ignore */ }
   loginScreen.style.display = 'flex';
   adminApp.style.display = 'none';
   document.getElementById('adminBody').classList.add('login-page');
