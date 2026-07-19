@@ -363,38 +363,11 @@ async function loadProjects() {
   });
 }
 
-/* ==============================
-   LOAD PROFILE PIC & CV — SUPABASE
-============================== */
-async function loadSiteSettings() {
-  const { data: rows } = await sb.from('settings').select('key, value').in('key', ['profile_pic']);
-  if (!rows) return;
-
-  rows.forEach(row => {
-    if (row.key === 'profile_pic' && row.value) {
-      const heroImg = document.getElementById('heroAvatarImg');
-      const heroPlaceholder = document.getElementById('heroAvatarPlaceholder');
-      if (heroImg && heroPlaceholder) {
-        heroImg.src = row.value;
-        heroImg.style.display = 'block';
-        heroPlaceholder.style.display = 'none';
-        // Remove onerror fallback to avoid flicker
-        heroImg.onerror = null;
-      }
-      const aboutImg = document.querySelector('.about-avatar .avatar-img');
-      const aboutPlaceholder = document.querySelector('.about-avatar .avatar-initials');
-      if (aboutImg && aboutPlaceholder) {
-        aboutImg.src = row.value;
-        aboutImg.style.display = 'block';
-        aboutPlaceholder.style.display = 'none';
-      }
-    }
-  });
-}
+/* Profile photo and CV are served from files in this repo
+   (profile.jpg, Dobgima_Joshua_Foncham_CV.pdf) — no Supabase override. */
 
 document.addEventListener('DOMContentLoaded', () => {
   loadProjects();
-  loadSiteSettings();
 });
 
 /* ==============================
