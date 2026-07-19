@@ -280,16 +280,6 @@ async function loadProjects() {
 
   if (error) { console.error('Could not load projects:', error); return; }
 
-  const count = (projects || []).length;
-
-  // Update counters dynamically
-  const statNumbers = document.querySelectorAll('.hero-stats .stat-number');
-  if (statNumbers.length >= 3) {
-    statNumbers[1].setAttribute('data-target', count.toString());
-    statNumbers[2].setAttribute('data-target', count.toString());
-    if (count === 0) { statNumbers[1].textContent = '0'; statNumbers[2].textContent = '0'; }
-  }
-
   if (!projects || projects.length === 0) {
     grid.innerHTML = `
       <div class="projects-empty">
@@ -340,7 +330,7 @@ async function loadProjects() {
    LOAD PROFILE PIC & CV — SUPABASE
 ============================== */
 async function loadSiteSettings() {
-  const { data: rows } = await sb.from('settings').select('key, value').in('key', ['profile_pic', 'cv']);
+  const { data: rows } = await sb.from('settings').select('key, value').in('key', ['profile_pic']);
   if (!rows) return;
 
   rows.forEach(row => {
@@ -360,14 +350,6 @@ async function loadSiteSettings() {
         aboutImg.src = row.value;
         aboutImg.style.display = 'block';
         aboutPlaceholder.style.display = 'none';
-      }
-    }
-    if (row.key === 'cv' && row.value) {
-      const cvBtn = document.getElementById('downloadCvBtn');
-      if (cvBtn) {
-        cvBtn.href = row.value;
-        cvBtn.setAttribute('download', 'Dobgima_Joshua_CV.pdf');
-        cvBtn.removeAttribute('data-mailto');
       }
     }
   });
