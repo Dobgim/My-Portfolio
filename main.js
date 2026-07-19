@@ -261,6 +261,44 @@ function normalizeUrl(url) {
   return url;
 }
 
+const STATIC_PROJECTS = [
+  {
+    title: 'M&J Luxurious Guest House',
+    description: 'Website for a premium apartment and guest house business in Bonamussadi, Douala — showcasing luxury units with a sleek, modern presentation.',
+    tags: 'Web, Hospitality',
+    icon: 'fas fa-hotel',
+    live_url: 'https://mjluxuriousguesthouse.vercel.app/',
+  },
+  {
+    title: 'SlumLife Children Foundation',
+    description: 'Website for a foundation empowering street children in Uganda — telling their story and connecting donors and volunteers to the cause.',
+    tags: 'Web, Non-Profit',
+    icon: 'fas fa-hand-holding-heart',
+    live_url: 'https://slum-life.vercel.app/',
+  },
+  {
+    title: 'Buea Shopping Mall',
+    description: 'Online cosmetics shopping platform for Buea — browse products, view details and shop from a clean, easy-to-use storefront.',
+    tags: 'Web, E-Commerce',
+    icon: 'fas fa-shopping-bag',
+    live_url: 'https://cosmetics-buea-shopping-mall-j5gg.vercel.app/',
+  },
+  {
+    title: 'I Grill House',
+    description: 'Restaurant website for a charcoal-grill house in Bamenda — full menu, daily specials, online reservations and WhatsApp ordering.',
+    tags: 'Web, Restaurant',
+    icon: 'fas fa-utensils',
+    live_url: 'https://i-grill-house.vercel.app/',
+  },
+  {
+    title: 'Hospital Management System',
+    description: 'Hospital platform with online appointment booking, doctor directory, departments, patient portal and 24/7 emergency contacts.',
+    tags: 'Web, Healthcare',
+    icon: 'fas fa-hospital',
+    live_url: 'https://hospitalmanagementsystem-eta-smoky.vercel.app/',
+  },
+];
+
 const PROJ_GRADIENTS = [
   'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
   'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
@@ -276,18 +314,17 @@ async function loadProjects() {
   const grid = document.getElementById('projectsGrid');
   if (!grid) return;
 
-  const { data: projects, error } = await sb.from('projects').select('*').order('created_at', { ascending: true });
-
-  if (error) { console.error('Could not load projects:', error); return; }
-
-  if (!projects || projects.length === 0) {
-    grid.innerHTML = `
-      <div class="projects-empty">
-        <div class="empty-icon"><i class="fas fa-folder-open"></i></div>
-        <h3>Projects Coming Soon</h3>
-        <p>I'm currently uploading my latest work. Check back soon!</p>
-      </div>`;
-    return;
+  // Start from the built-in featured projects, then append any extra
+  // projects added via the admin panel (skipping duplicate URLs).
+  let projects = [...STATIC_PROJECTS];
+  try {
+    const { data: dbProjects, error } = await sb.from('projects').select('*').order('created_at', { ascending: true });
+    if (!error && dbProjects) {
+      const knownUrls = new Set(STATIC_PROJECTS.map(p => normalizeUrl(p.live_url)));
+      projects = projects.concat(dbProjects.filter(p => !knownUrls.has(normalizeUrl(p.live_url || ''))));
+    }
+  } catch (e) {
+    console.error('Could not load projects from Supabase:', e);
   }
 
   grid.innerHTML = projects.map((p, i) => {
