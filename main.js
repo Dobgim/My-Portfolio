@@ -154,11 +154,14 @@ const navLinksEl = document.getElementById('navLinks');
 hamburger.addEventListener('click', () => {
   hamburger.classList.toggle('active');
   navLinksEl.classList.toggle('open');
+  // Lock page scrolling while the menu is open
+  document.body.style.overflow = navLinksEl.classList.contains('open') ? 'hidden' : '';
 });
 navLinksEl.querySelectorAll('.nav-link').forEach(link => {
   link.addEventListener('click', () => {
     hamburger.classList.remove('active');
     navLinksEl.classList.remove('open');
+    document.body.style.overflow = '';
   });
 });
 
